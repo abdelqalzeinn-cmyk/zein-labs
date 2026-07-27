@@ -1,0 +1,6 @@
+version: '3'
+build:
+  cpu: "2"
+  memory: "4GB"
+  gpu: none
+  space: true
