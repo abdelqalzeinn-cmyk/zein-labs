@@ -3,54 +3,106 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AgileBot Companion Pack #1 — Roblox Studio Utility Scripts</title>
+<title>Luau Lab — Beautify, Minify & Stats for Roblox Luau</title>
 <style>
-  :root { --bg:#0d0f14; --card:#161a22; --acc:#E8B923; --txt:#e8eaf0; --mut:#9aa3b2; }
+  :root { --bg:#0d0f14; --card:#161a22; --acc:#E8B923; --txt:#e8eaf0; --mut:#9aa3b2; --line:#232833; }
   * { box-sizing: border-box; }
   body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-         background:var(--bg); color:var(--txt); line-height:1.6; }
-  .wrap { max-width:760px; margin:0 auto; padding:48px 20px 80px; }
-  h1 { font-size:2.1rem; margin:0 0 8px; }
-  .sub { color:var(--mut); margin:0 0 32px; }
-  .card { background:var(--card); border:1px solid #232833; border-radius:14px; padding:24px; margin:20px 0; }
-  h2 { font-size:1.2rem; margin:0 0 12px; color:var(--acc); }
-  ul { margin:0; padding-left:20px; }
-  li { margin:6px 0; }
-  .price { font-size:1.6rem; font-weight:700; }
-  .buy { display:inline-block; margin-top:16px; background:var(--acc); color:#111;
-         font-weight:700; text-decoration:none; padding:14px 28px; border-radius:10px; font-size:1.05rem; }
-  .buy:hover { filter:brightness(1.08); }
-  code { background:#0a0c10; padding:2px 6px; border-radius:5px; color:#cfe; }
-  footer { color:var(--mut); font-size:.85rem; margin-top:40px; text-align:center; }
+         background:var(--bg); color:var(--txt); line-height:1.5; }
+  .wrap { max-width:900px; margin:0 auto; padding:40px 20px 80px; }
+  h1 { font-size:2rem; margin:0 0 4px; }
+  .sub { color:var(--mut); margin:0 0 24px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:720px){ .grid{grid-template-columns:1fr;} }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; }
+  h2 { font-size:1.05rem; margin:0 0 10px; color:var(--acc); }
+  textarea { width:100%; height:240px; background:#0a0c10; color:#cfe; border:1px solid var(--line);
+             border-radius:10px; padding:12px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; resize:vertical; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  button { background:var(--acc); color:#111; font-weight:700; border:0; padding:10px 16px;
+           border-radius:9px; cursor:pointer; font-size:.95rem; }
+  button.sec { background:#222834; color:var(--txt); }
+  button:hover { filter:brightness(1.08); }
+  .stats { font-size:.9rem; color:var(--mut); margin-top:8px; }
+  .stats b { color:var(--txt); }
+  .tip { margin-top:34px; text-align:center; color:var(--mut); font-size:.9rem; }
+  .tip a { color:var(--acc); text-decoration:none; font-weight:700; }
+  /* ADSENSE_PLACEHOLDER_START */
+  .ad { display:none; }
+  /* ADSENSE_PLACEHOLDER_END */
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>AgileBot Companion Pack #1</h1>
-  <p class="sub">5 ready-to-use Roblox Studio utility scripts — batch anchor, rename, empty-cleaner, find-all, weld helper.</p>
+  <h1>Luau Lab</h1>
+  <p class="sub">Free in-browser Luau beautifier, minifier & code stats. No upload, runs 100% in your browser.</p>
 
-  <div class="card">
-    <h2>What you get</h2>
-    <ul>
-      <li><b>FindAll</b> — collect every instance of a class under a parent</li>
-      <li><b>BatchAnchor</b> — anchor/unanchor BaseParts in bulk</li>
-      <li><b>RenameSelected</b> — prefix/suffix rename in one pass</li>
-      <li><b>EmptyCleaner</b> — delete empty Models/Folders</li>
-      <li><b>WeldHelper</b> — drop WeldConstraints instantly</li>
-    </ul>
-    <p>Drop-in ModuleScripts. Works in Roblox Studio. No setup, no dependencies.</p>
+  <div class="grid">
+    <div class="card">
+      <h2>Input</h2>
+      <textarea id="in" placeholder="Paste your Luau / Lua code here...">local x=1
+function hello()
+if x>0 then
+print("hi")
+end
+end</textarea>
+      <div class="row">
+        <button onclick="doBeautify()">Beautify</button>
+        <button class="sec" onclick="doMinify()">Minify</button>
+        <button class="sec" onclick="doStats()">Stats</button>
+        <button class="sec" onclick="clearAll()">Clear</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Output</h2>
+      <textarea id="out" readonly placeholder="Result appears here..."></textarea>
+      <div class="stats" id="stats"></div>
+    </div>
   </div>
 
-  <div class="card">
-    <h2>Price</h2>
-    <p class="price">$9 <span style="font-size:1rem;color:var(--mut)">one-time</span></p>
-    <p>Instant download after purchase. Built by the same hands behind AgileBot.</p>
-    <a class="buy" href="REPLACE_WITH_YOUR_GUMROAD_PRODUCT_URL">Buy on Gumroad →</a>
+  <div class="tip">
+    Found this useful?
+    <a href="REPLACE_WITH_BUYMEACOFFEE_URL">Buy me a coffee ☕</a>
+    <!-- ADSENSE_PLACEHOLDER: paste your AdSense <ins> snippet here -->
   </div>
-
-  <footer>
-    Part of the Zein Labs autonomous-business experiment · powered by a free AI model.
-  </footer>
 </div>
+
+<script>
+function beautify(src){
+  const lines = src.replace(/\r/g,'').split('\n');
+  let indent = 0; const out = [];
+  const openRe = /\b(?:then|do|function|repeat)\b|^.*[\{\(]$/;
+  const closeRe = /^\s*(?:end|until|else|elseif|\}|\)|\])/;
+  for(let raw of lines){
+    let line = raw.trim();
+    if(line===''){ out.push(''); continue; }
+    if(closeRe.test(line)) indent = Math.max(0, indent-1);
+    out.push('  '.repeat(indent) + line);
+    if(openRe.test(line)) indent++;
+  }
+  return out.join('\n');
+}
+function minify(src){
+  return src
+    .replace(/\-\-\[\[[\s\S]*?\]\]\-/g,'')
+    .replace(/\-\-[^\n]*/g,'')
+    .replace(/\s+/g,' ')
+    .replace(/\s*([\{\}\(\)\[\]\;\,])\s*/g,'$1')
+    .trim();
+}
+function stats(src){
+  const noComments = src.replace(/\-\-\[\[[\s\S]*?\]\]\-/g,'').replace(/\-\-[^\n]*/g,'');
+  const lines = src.replace(/\r/g,'').split('\n').filter(l=>l.trim()!=='').length;
+  const chars = src.length;
+  const tokens = (noComments.match(/[A-Za-z_]\w*|[0-9]+\.?[0-9]*|\S/g)||[]).length;
+  const funcs = (src.match(/\bfunction\b/g)||[]).length;
+  return `Lines <b>${lines}</b> · Chars <b>${chars}</b> · Tokens <b>${tokens}</b> · Functions <b>${funcs}</b>`;
+}
+function setOut(t){ document.getElementById('out').value = t; }
+function doBeautify(){ setOut(beautify(document.getElementById('in').value)); document.getElementById('stats').innerHTML=''; }
+function doMinify(){ setOut(minify(document.getElementById('in').value)); document.getElementById('stats').innerHTML=''; }
+function doStats(){ const s=document.getElementById('in').value; document.getElementById('stats').innerHTML = stats(s); }
+function clearAll(){ document.getElementById('in').value=''; setOut(''); document.getElementById('stats').innerHTML=''; }
+</script>
 </body>
 </html>

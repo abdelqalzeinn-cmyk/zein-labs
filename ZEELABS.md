@@ -1,30 +1,33 @@
-# Zein Labs — SIMPLIFIED plan (2026-07-27 revision)
+# Zein Labs — SIMPLIFIED plan (2026-07-27, Option #1)
 
-Goal: prove a free-model AI can run a profitable micro-business. Keep it DEAD SIMPLE
-so revenue actually flows.
+Goal: dead-simple, $0-cost, passive-traffic web utility. No backend, no KYC to launch.
 
-## The easy money model
-1. **One product**: AgileBot Companion Pack #1 (5 Roblox Studio Lua utilities, zip built + verified).
-2. **One payment processor**: Gumroad — handles payments, tax, delivery. Already drafted
-   (product ID XXkE-lCm-jgCmds6n7mA6Q==, file attached). Blocked only on payout KYC.
-3. **One traffic source**: the YouTube video about this experiment + Roblox/AgileBot audience.
-4. **One landing page**: `site/index.html` (GitHub Pages, $0) → "Buy on Gumroad" button.
+## The product: Luau Lab
+Single-file HTML web utility for Roblox devs:
+- **Beautify** — re-indents messy Luau/Lua.
+- **Minify** — strips comments + whitespace to one line.
+- **Stats** — lines / chars / tokens / function count.
+- 100% client-side JS. No upload, no server, no payment processor needed to run.
+- Money: **Buy Me a Coffee** button + (optional) AdSense slot (placeholder in HTML).
 
-## Dropped (over-engineering)
-- HF Space Docker deployment
-- Crypto Coinbase Commerce checkout
-- Agent-facing micro-API (/v1/luau-check, /buy-api-key)
-These were interesting but added friction with no buyer. The customer is a human Roblox
-dev, not another AI. Keep the store code in `store/` as a backup, but the live funnel is
-Gumroad + simple page.
+## Why this beats the Roblox-scripts product
+- Zero KYC to go live (GitHub Pages is free, no Gumroad payout block).
+- Passive traffic: Roblox devs search "luau beautifier" → SEO + your YouTube video.
+- No inventory, no delivery, no support burden.
 
-## Operator to-do (the only human step)
-- Complete Gumroad payout details (KYC) → product goes live.
-- Put the live Gumroad product URL into `site/index.html` (replace REPLACE_WITH_YOUR_GUMROAD_PRODUCT_URL).
-- Enable GitHub Pages on the repo (main branch, / root) so the landing page is public.
-- Paste the video link in YouTube description.
+## Deploy (GitHub Pages, $0)
+1. Repo already on GitHub (abdelqalzeinn-cmyk/zein-labs).
+2. Settings → Pages → Source: main branch, /root → Save.
+3. Live at https://abdelqalzeinn-cmyk.github.io/zein-labs/site/index.html
+   (or move index.html to repo root for a cleaner URL).
+4. Replace `REPLACE_WITH_BUYMEACOFFEE_URL` with your coffee link.
+5. Paste the URL in your YouTube video description.
 
 ## Autonomous loop (unchanged)
-- `business-daily` cron reads steer.md, reports to reports/ + git push.
+- `business-daily` cron: reads steer.md, reports to reports/ + git push.
 - Model: tencent/hy3:free (Nous) → $0 token cost.
-- Net-positive bar: one $9 sale clears ~2 months of any cost. Trivial.
+- Net-positive bar: one $5 coffee = profitable forever at $0 cost.
+
+## Dropped
+- Gumroad product, HF Space Docker, crypto checkout, agent micro-API.
+  (store/ code kept as backup, not the live funnel.)
