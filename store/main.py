@@ -11,6 +11,7 @@ app = FastAPI(title="Zein Labs")
 # Config from env (HF Space secrets). NEVER hardcode keys.
 CRYPTO_ENABLED = bool(os.environ.get("CRYPTO_ENABLED"))  # "1" to arm real crypto checkout
 COINBASE_API_KEY = os.environ.get("COINBASE_COMMERCE_KEY", "")  # optional
+JINA_API_KEY = os.environ.get("JINA_API_KEY", "")
 PRODUCTS = {
     "pack1": {
         "name": "AgileBot Companion Pack 1 - Studio Utility Scripts",
@@ -100,3 +101,32 @@ async def lua_gen(request: Request):
 @app.get("/health")
 def health():
     return {"ok": True, "crypto": CRYPTO_ENABLED, "orders": len(ORDERS)}
+
+# --- Autonomous research via jina.ai (Fabler Labs-style recon) ---
+JINA_HEADERS = {"User-Agent": "Mozilla/5.0", "Accept": "text/plain"}
+if JINA_API_KEY:
+    JINA_HEADERS["Authorization"] = f"Bearer {JINA_API_KEY}"
+
+@app.get("/search/q")
+def search_query(q: str = Query(...)):
+    """Web search via jina reader on a DuckDuckGo HTML SERP (free, reliable)."""
+    ddg = "https://html.duckduckgo.com/html/?q=" + urllib.parse.quote(q)
+    url = "https://r.jina.ai/" + ddg
+    req = urllib.request.Request(url, headers=JINA_HEADERS)
+    try:
+        txt = urllib.request.urlopen(req, timeout=25).read().decode("utf-8", "replace")
+    except Exception as e:
+        return Response(json.dumps({"error": str(e)}), status_code=502, media_type="application/json")
+    return {"query": q, "results": txt[:4000]}
+
+@app.get("/search/u")
+def search_url(u: str = Query(...)):
+    """Read + extract any URL via jina's r.jina.ai reader."""
+    target = u if u.startswith("http") else "https://" + u
+    url = "https://r.jina.ai/" + target
+    req = urllib.request.Request(url, headers=JINA_HEADERS)
+    try:
+        txt = urllib.request.urlopen(req, timeout=20).read().decode("utf-8", "replace")
+    except Exception as e:
+        return Response(json.dumps({"error": str(e)}), status_code=502, media_type="application/json")
+    return {"url": target, "extracted": txt[:4000]}
